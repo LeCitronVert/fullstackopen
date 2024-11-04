@@ -1,0 +1,20 @@
+*[class^='notif-'] {
+    border: solid 1px var(--notif-border-color);
+    border-radius: 5px;
+    padding: 10px;
+    margin: 10px 0;
+    background-color: var(--notif-bg-color);
+    color: var(--notif-text-color);
+}
+
+.notif-valid {
+    --notif-border-color: #00ff00;
+    --notif-bg-color: #00ff00;
+    --notif-text-color: #ffffff;
+}
+
+.notif-error {
+    --notif-border-color: #ff0000;
+    --notif-bg-color: #ff0000;
+    --notif-text-color: #ffffff;
+}

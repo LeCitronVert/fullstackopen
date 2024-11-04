@@ -5,8 +5,32 @@ import Persons from "../components/Persons.jsx";
 import PersonForm from "../components/PersonForm.jsx";
 import axios from "axios";
 import PersonService from "../services/PersonService.jsx";
+import './app.css'
+import Notifications from "../components/Notifications.jsx";
 
 const App = () => {
+
+    const [notificationMessage, setNotificationMessage] = useState(null)
+    const [notificationType, setNotificationType] = useState(true)
+
+    const setErrorMessage = (message) => {
+        setNotificationMessage(message)
+        setNotificationType(false)
+
+        setTimeout(() => {
+            setNotificationMessage(null)
+        }, 5000)
+    }
+
+    const setSuccessMessage = (message) => {
+        setNotificationMessage(message)
+        setNotificationType(true)
+
+        setTimeout(() => {
+            setNotificationMessage(null)
+        }, 5000)
+    }
+
     const [persons, setPersons] = useState([])
     const [newName, setNewName] = useState('')
     const [newPhone, setNewPhone] = useState('')
@@ -28,6 +52,7 @@ const App = () => {
                     const updatedPersonFromServer = response.data
 
                     setPersons(persons.map((currentPerson) => currentPerson.id !== person.id ? currentPerson : updatedPersonFromServer))
+                    setSuccessMessage(`Updated ${newName}`)
                 })
                 .catch(() => {
                     alert('An error occured updating person')
@@ -46,6 +71,7 @@ const App = () => {
             .create(personObject)
             .then((response) => {
                 setPersons(persons.concat(response.data))
+                setSuccessMessage(`Added ${newName}`)
             })
             .catch(() => {
                 alert('An error occured creating new person')
@@ -72,6 +98,7 @@ const App = () => {
                 .remove(id)
                 .then(() => {
                     setPersons(persons.filter((person) => person.id !== id))
+                    setSuccessMessage(`Deleted ${person.name}`)
                 })
                 .catch(() => {
                     alert('An error occured deleting person')
@@ -102,7 +129,6 @@ const App = () => {
 
     useEffect(fetchEffect, [])
 
-
     return (
         <div>
             <h2>Phonebook</h2>
@@ -110,6 +136,8 @@ const App = () => {
             <Search setSearchTerm={setSearchTerm} />
 
             <h2>add new</h2>
+
+            <Notifications message={notificationMessage} isSuccessful={notificationType} />
 
             <PersonForm
                 handleSubmit={handleSubmit} handleNameChange={handleNameChange}
