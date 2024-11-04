@@ -16,6 +16,28 @@ const Anecdotes = ({ anecdotes, selected, points, handleVote }) => {
     )
 }
 
+const BestAnecdote = ({ anecdotes, points }) => {
+    const maxVotes = Math.max(...points)
+    const bestAnecdoteIndex = points.indexOf(maxVotes)
+
+    if (maxVotes === 0) {
+        return (
+            <div>
+                <h2>Anecdote with most votes</h2>
+                <div>Waiting for an anecdote to have votes ...</div>
+            </div>
+        )
+    }
+
+    return (
+        <div>
+            <h2>Anecdote with most votes</h2>
+            <p>{anecdotes[bestAnecdoteIndex]}</p>
+            <p>has {points[bestAnecdoteIndex]} vote(s)</p>
+        </div>
+    )
+}
+
 const App = () => {
     const anecdotes = [
         'If it hurts, do it more often.',
@@ -43,6 +65,8 @@ const App = () => {
         <div>
             <button onClick={() => setSelected(Math.floor(Math.random() * anecdotes.length))}>Load random anecdote</button>
             <Anecdotes anecdotes={anecdotes} selected={selected} points={points} handleVote={() => handleVote()} />
+
+            <BestAnecdote anecdotes={anecdotes} points={points} />
         </div>
     )
 }
