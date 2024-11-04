@@ -3,6 +3,14 @@ import Percent from "./Percent.jsx";
 import Average from "./Average.jsx";
 
 const Stats = ({ good, neutral, bad }) => {
+    const totalVotes = good + neutral + bad
+
+    if (totalVotes === 0) {
+        return (
+            <p>No feedback given</p>
+        )
+    }
+
     return (
         <div>
             <h1>Stats</h1>
