@@ -1,6 +1,9 @@
 const Percent = ({ label, value, total }) => {
     return (
-        <p>{label}: {(value / total * 100) || 0}%</p>
+        <tr>
+            <td>{label}</td>
+            <td>{(value / total * 100) || 0}%</td>
+        </tr>
     )
 }
 

@@ -1,6 +1,9 @@
 const StatsLine = ({ label, value }) => {
     return (
-        <p>{label}: {value}</p>
+        <tr>
+            <td>{label}</td>
+            <td>{value}</td>
+        </tr>
     )
 }
 

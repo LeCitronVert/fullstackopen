@@ -1,10 +1,17 @@
 const Average = ({ good, neutral, bad }) => {
     const totalVotes = good + neutral + bad
 
-    if (totalVotes === 0) {
+    const buildRender = (value) => {
         return (
-            <p>Average: 0</p>
-        )
+            <tr>
+                <td>Average</td>
+                <td>{value}</td>
+            </tr>
+        );
+    }
+
+    if (totalVotes === 0) {
+        return buildRender(0);
     }
 
     const goodScore = 1 * good
@@ -12,9 +19,7 @@ const Average = ({ good, neutral, bad }) => {
 
     const totalScore = (goodScore + badScore) / totalVotes
 
-    return (
-        <p>Average: {totalScore}</p>
-    )
+    return buildRender(totalScore)
 }
 
 export default Average
