@@ -13,7 +13,7 @@
     --notif-text-color: #ffffff;
 }
 
-.notif-error {
+.notif-invalid {
     --notif-border-color: #ff0000;
     --notif-bg-color: #ff0000;
     --notif-text-color: #ffffff;

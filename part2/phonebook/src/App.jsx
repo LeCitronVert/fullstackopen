@@ -55,7 +55,7 @@ const App = () => {
                     setSuccessMessage(`Updated ${newName}`)
                 })
                 .catch(() => {
-                    alert('An error occured updating person')
+                    setErrorMessage(`Information of ${newName} has already been removed from server`)
                 })
 
             return;
@@ -74,7 +74,7 @@ const App = () => {
                 setSuccessMessage(`Added ${newName}`)
             })
             .catch(() => {
-                alert('An error occured creating new person')
+                setErrorMessage('An error occured adding person')
             })
     }
 
@@ -101,7 +101,7 @@ const App = () => {
                     setSuccessMessage(`Deleted ${person.name}`)
                 })
                 .catch(() => {
-                    alert('An error occured deleting person')
+                    setErrorMessage(`Information of ${person.name} has already been removed from server. Try adding it again as a new Person.`)
                 })
         }
     }
@@ -123,7 +123,7 @@ const App = () => {
                 setPersons(response.data)
             })
             .catch((error) => {
-                alert('An error occured fetching all persons')
+                setErrorMessage('An error occured fetching persons')
             })
     }
 
