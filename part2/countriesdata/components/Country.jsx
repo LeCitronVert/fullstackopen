@@ -1,3 +1,5 @@
+import CountryWeather from "./CountryWeather.jsx";
+
 const Country = ({ country }) => {
     return (
         <div>
@@ -13,6 +15,8 @@ const Country = ({ country }) => {
             </ul>
 
             <img src={country.flags.png} alt={country.name.common} />
+
+            <CountryWeather country={country} />
         </div>
     )
 }
