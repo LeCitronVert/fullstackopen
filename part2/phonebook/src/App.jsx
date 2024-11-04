@@ -3,9 +3,13 @@ import Person from "../components/Person.jsx";
 
 const App = () => {
     const [persons, setPersons] = useState([
-        { name: 'Arto Hellas' }
+        {
+            name: 'Arto Hellas',
+            phone: '040-123456'
+        }
     ])
     const [newName, setNewName] = useState('')
+    const [newPhone, setNewPhone] = useState('')
 
     const handleSubmit = (event) => {
         event.preventDefault()
@@ -18,12 +22,16 @@ const App = () => {
 
 
         const personObject = {
-            name: newName
+            name: newName,
+            phone: newPhone
         }
         setPersons(persons.concat(personObject))
     }
     const handleNameChange = (event) => {
         setNewName(event.target.value)
+    }
+    const handlePhoneChange = (event) => {
+        setNewPhone(event.target.value)
     }
 
     return (
@@ -31,7 +39,10 @@ const App = () => {
             <h2>Phonebook</h2>
             <form onSubmit={handleSubmit}>
                 <div>
-                    name: <input onChange={handleNameChange} />
+                    name: <input required='required' onChange={handleNameChange} />
+                </div>
+                <div>
+                    phone : <input required='required' onChange={handlePhoneChange} />
                 </div>
                 <div>
                     <button type="submit">add</button>
