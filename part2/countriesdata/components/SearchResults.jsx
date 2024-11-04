@@ -1,7 +1,7 @@
 import SearchResult from "./SearchResult.jsx";
 import Country from "./Country.jsx";
 
-const SearchResults = ({ searchResults }) => {
+const SearchResults = ({ searchResults, setFocusedCountry }) => {
     if (null === searchResults) {
         return <p>No results</p>
     }
@@ -14,7 +14,7 @@ const SearchResults = ({ searchResults }) => {
         return (
             <ul>
                 {searchResults.map((country) => {
-                    return <SearchResult key={country.name.common} searchResult={country} />
+                    return <SearchResult key={country.name.common} searchResult={country} setFocusCountry={setFocusedCountry} />
                 })}
             </ul>
         )

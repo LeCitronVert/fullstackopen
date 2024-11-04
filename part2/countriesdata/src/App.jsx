@@ -6,9 +6,16 @@ import SearchResults from "../components/SearchResults.jsx";
 function App() {
     const [allCountries, setAllCountries] = useState([])
     const [searchResults, setSearchResults] = useState(null)
+    const [focusedCountry, setFocusedCountry] = useState(null)
 
-    const handleSearch = (event) => {
-        const searchValue = event.target.value
+    const resetFocusedCountry = () => {
+        if (null !== focusedCountry) {
+            setFocusedCountry(null)
+        }
+    }
+
+    const handleSearch = (event = null) => {
+        const searchValue = focusedCountry || event.target.value
         const searchResults = allCountries.filter((country) => {
             const lowercaseSearchValue = searchValue.toLowerCase()
 
@@ -20,6 +27,7 @@ function App() {
 
         if (0 === searchResults.length) {
             setSearchResults(null)
+            resetFocusedCountry()
 
             return
         }
@@ -33,11 +41,15 @@ function App() {
                 .catch((error) => {
                     alert("Error fetching data")
                 })
+                .finally(() => {
+                    resetFocusedCountry()
+                })
 
             return
         }
 
         setSearchResults(searchResults)
+        resetFocusedCountry()
     }
 
     useEffect(() => {
@@ -50,11 +62,15 @@ function App() {
             })
     }, [])
 
+    if (null !== focusedCountry) {
+        handleSearch();
+    }
+
     return (
         <div>
             <SearchForm handleSearch={handleSearch} />
 
-            <SearchResults searchResults={searchResults} />
+            <SearchResults searchResults={searchResults} setFocusedCountry={setFocusedCountry} />
         </div>
     )
 }
