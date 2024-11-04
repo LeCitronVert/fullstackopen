@@ -4,6 +4,7 @@ import Search from "../components/Search.jsx";
 import Persons from "../components/Persons.jsx";
 import PersonForm from "../components/PersonForm.jsx";
 import axios from "axios";
+import PersonService from "../services/PersonService.jsx";
 
 const App = () => {
     const [persons, setPersons] = useState([])
@@ -24,8 +25,20 @@ const App = () => {
             name: newName,
             number: newPhone
         }
-        setPersons(persons.concat(personObject))
+
+        PersonService
+            .create(personObject)
+            .then((response) => {
+                setPersons(persons.concat(response.data))
+                setNewName('')
+                setNewPhone('')
+            })
+            .catch(() => {
+                alert('An error occured creating new person')
+            })
     }
+
+    
     const handleNameChange = (event) => {
         setNewName(event.target.value)
     }
@@ -44,13 +57,13 @@ const App = () => {
 
 
     const fetchEffect = () => {
-        axios
-            .get('http://localhost:3001/persons')
+        PersonService
+            .getAll()
             .then((response) => {
                 setPersons(response.data)
             })
             .catch((error) => {
-                console.log(error)
+                alert('An error occured fetching all persons')
             })
     }
 
