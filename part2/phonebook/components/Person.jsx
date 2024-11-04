@@ -1,8 +1,8 @@
 const Person = ({ person }) => {
     return (
-        <div>
-            <p>{person.name} : {person.phone}</p>
-        </div>
+        <li>
+            <p>{person.name} : {person.number}</p>
+        </li>
     )
 }
 

@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import Person from "../components/Person.jsx";
 import Search from "../components/Search.jsx";
+import Persons from "../components/Persons.jsx";
+import PersonForm from "../components/PersonForm.jsx";
 
 const App = () => {
     const [persons, setPersons] = useState([
@@ -24,7 +26,7 @@ const App = () => {
 
         const personObject = {
             name: newName,
-            phone: newPhone
+            number: newPhone
         }
         setPersons(persons.concat(personObject))
     }
@@ -43,7 +45,7 @@ const App = () => {
         ? persons
         : persons.filter((person) => person.name.toLowerCase().includes(searchTerm.toLowerCase()))
     ;
-    
+
 
     return (
         <div>
@@ -52,21 +54,15 @@ const App = () => {
             <Search setSearchTerm={setSearchTerm} />
 
             <h2>add new</h2>
-            <form onSubmit={handleSubmit}>
-                <div>
-                    name: <input required='required' onChange={handleNameChange} />
-                </div>
-                <div>
-                    phone : <input required='required' onChange={handlePhoneChange} />
-                </div>
-                <div>
-                    <button type="submit">add</button>
-                </div>
-            </form>
 
+            <PersonForm
+                handleSubmit={handleSubmit} handleNameChange={handleNameChange}
+                handlePhoneChange={handlePhoneChange}
+            />
 
             <h2>Numbers</h2>
-            {displayedPersons.map((person) => <Person key={person.name} person={person} />)}
+
+            <Persons persons={displayedPersons} />
         </div>
     )
 }
