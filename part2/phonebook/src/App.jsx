@@ -15,7 +15,23 @@ const App = () => {
         event.preventDefault()
 
         if (persons.some((person) => person.name === newName)) {
-            alert(`${newName} is already added to phonebook`)
+            if (!window.confirm(`${newName} is already added to phonebook, replace the old number with a new one?`)) {
+                return;
+            }
+
+            const person = persons.find((person) => person.name === newName)
+            const changedPerson = {...person, number: newPhone}
+
+            PersonService
+                .update(person.id, changedPerson)
+                .then((response) => {
+                    const updatedPersonFromServer = response.data
+
+                    setPersons(persons.map((currentPerson) => currentPerson.id !== person.id ? currentPerson : updatedPersonFromServer))
+                })
+                .catch(() => {
+                    alert('An error occured updating person')
+                })
 
             return;
         }
@@ -30,8 +46,6 @@ const App = () => {
             .create(personObject)
             .then((response) => {
                 setPersons(persons.concat(response.data))
-                setNewName('')
-                setNewPhone('')
             })
             .catch(() => {
                 alert('An error occured creating new person')
