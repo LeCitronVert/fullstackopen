@@ -38,12 +38,31 @@ const App = () => {
             })
     }
 
-    
+
     const handleNameChange = (event) => {
         setNewName(event.target.value)
     }
     const handlePhoneChange = (event) => {
         setNewPhone(event.target.value)
+    }
+
+    const handleDelete = (id) => {
+        const person = persons.find((person) => person.id === id)
+
+        if (!window.confirm(`Delete ${person.name} ?`)) {
+            return;
+        }
+
+        if (confirm) {
+            PersonService
+                .remove(id)
+                .then(() => {
+                    setPersons(persons.filter((person) => person.id !== id))
+                })
+                .catch(() => {
+                    alert('An error occured deleting person')
+                })
+        }
     }
 
 
@@ -85,7 +104,7 @@ const App = () => {
 
             <h2>Numbers</h2>
 
-            <Persons persons={displayedPersons} />
+            <Persons persons={displayedPersons} handleDelete={handleDelete} />
         </div>
     )
 }
