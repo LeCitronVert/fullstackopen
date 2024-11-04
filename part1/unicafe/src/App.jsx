@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import Percent from "./Percent.jsx";
 import Average from "./Average.jsx";
+import StatsLine from "./StatsLine.jsx";
+import Button from "./Button.jsx";
 
 const Stats = ({ good, neutral, bad }) => {
     const totalVotes = good + neutral + bad
@@ -15,9 +17,9 @@ const Stats = ({ good, neutral, bad }) => {
         <div>
             <h1>Stats</h1>
 
-            <p>Good: {good}</p>
-            <p>Neutral: {neutral}</p>
-            <p>Bad: {bad}</p>
+            <StatsLine label={'Good'} value={good}/>
+            <StatsLine label={'Neutral'} value={neutral}/>
+            <StatsLine label={'Bad'} value={bad}/>
 
             <Average good={good} neutral={neutral} bad={bad}/>
             <Percent label={'Positive'} value={good} total={good + neutral + bad}/>
@@ -35,9 +37,9 @@ const App = () => {
         <div>
             <h1>Feedback</h1>
 
-            <button onClick={() => setGood(good + 1)}>Good</button>
-            <button onClick={() => setNeutral(neutral + 1)}>Neutral</button>
-            <button onClick={() => setBad(bad + 1)}>Bad</button>
+            <Button label={'Good'} onClick={() => setGood(good + 1)}/>
+            <Button label={'Neutral'} onClick={() => setNeutral(neutral + 1)}/>
+            <Button label={'Bad'} onClick={() => setBad(bad + 1)}/>
 
             <Stats good={good} neutral={neutral} bad={bad}/>
         </div>
