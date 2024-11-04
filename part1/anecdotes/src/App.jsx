@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-const Anecdotes = ({ anecdotes, selected }) => {
+const Anecdotes = ({ anecdotes, selected, points, handleVote }) => {
     if (null === selected) {
         return (
             <div>Press the button to load an anecdote !</div>
@@ -9,7 +9,9 @@ const Anecdotes = ({ anecdotes, selected }) => {
 
     return (
         <div>
-            {anecdotes[selected]}
+            <p>{anecdotes[selected]}</p>
+            <p>has {points[selected]} vote(s)</p>
+            <button onClick={handleVote}>Vote</button>
         </div>
     )
 }
@@ -26,13 +28,21 @@ const App = () => {
         'The only way to go fast, is to go well.'
     ]
 
+
     const [selected, setSelected] = useState(null)
+    const [points, setPoints] = useState(new Array(anecdotes.length).fill(0))
+
+    const handleVote = () => {
+        const copy = [...points]
+        copy[selected] += 1
+        setPoints(copy)
+    }
 
 
     return (
         <div>
             <button onClick={() => setSelected(Math.floor(Math.random() * anecdotes.length))}>Load random anecdote</button>
-            <Anecdotes anecdotes={anecdotes} selected={selected}/>
+            <Anecdotes anecdotes={anecdotes} selected={selected} points={points} handleVote={() => handleVote()} />
         </div>
     )
 }
